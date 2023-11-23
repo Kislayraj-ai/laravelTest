@@ -13,10 +13,10 @@ class bussinessController extends Controller
         return view('allBussinesses' ,['bussiness' => $bussiness ]) ;
     }
 
-    // public function index(): View {
-        // $students  = bussinessModel::all();
-        // return view('allBussinesses')->with('students',$students) ;
-// }
+    public function index(): View {
+        $bussiness  = bussinessModel::all();
+        return view('allBussinesses' ,['bussiness' => $bussiness ]) ;
+}
 
     public function create() : View{
 
@@ -25,7 +25,15 @@ class bussinessController extends Controller
 
     public function store(Request $req){
         $input  = $req->all() ;
-        // print_r( $input );die;
+        $req->validate([
+            'Name ' => "required" ,
+            "address" => "required" ,
+            'email' => 'required  | email' ,
+            "website" => "required" ,
+            'contact_person' => 'required' ,
+            'phone_no' => 'required | numeric',
+    ]
+    ) ;
          bussinessModel::create($input);
         return redirect('/')->with('flash_message','Student Added');
  }
